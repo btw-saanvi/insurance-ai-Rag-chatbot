@@ -1,7 +1,7 @@
-# AarogyaAid AI Policy Recommender
+# AI Policy Recommender
 
 ## Project Overview
-AarogyaAid AI is a student project built to help people understand health insurance policies without having to read 50-page PDF documents. The system uses **Retrieval-Augmented Generation (RAG)** to analyze user profiles (like age, income, and health history) and compare them against actual insurance policy documents to find the best match.
+This AI is a student project built to help people understand health insurance policies without having to read 50-page PDF documents. The system uses **Retrieval-Augmented Generation (RAG)** to analyze user profiles (like age, income, and health history) and compare them against actual insurance policy documents to find the best match.
 
 Instead of just guessing, the AI looks up the exact terms and conditions from a private database, making the advice much more reliable than a standard chatbot.
 
