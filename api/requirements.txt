@@ -1,0 +1,11 @@
+pytest
+httpx
+pypdf
+fastapi
+uvicorn
+chromadb
+python-dotenv
+openai
+pydantic
+python-multipart
+

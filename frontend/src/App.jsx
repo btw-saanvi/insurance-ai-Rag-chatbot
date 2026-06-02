@@ -6,6 +6,9 @@ import {
   AlertCircle, CheckCircle2, Lock
 } from 'lucide-react';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/$/, '');
+const apiUrl = (path) => `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
+
 function App() {
   const [view, setView] = useState('landing'); // 'landing', 'user', 'admin', 'login'
   const [formData, setFormData] = useState({
@@ -40,7 +43,7 @@ function App() {
 
   const fetchPolicies = async () => {
     try {
-      const response = await fetch('http://localhost:5000/admin/policies', {
+      const response = await fetch(apiUrl('/admin/policies'), {
         headers: { 'Authorization': 'Basic ' + btoa(`${adminAuth.user}:${adminAuth.pass}`) }
       });
       if (response.ok) {
@@ -69,7 +72,7 @@ function App() {
     fd.append('policy_name', uploadData.policyName);
 
     try {
-      const response = await fetch('http://localhost:5000/upload-policy', {
+      const response = await fetch(apiUrl('/upload-policy'), {
         method: 'POST',
         body: fd
       });
@@ -87,7 +90,7 @@ function App() {
   const deletePolicy = async (filename) => {
     if (!window.confirm(`Delete ${filename}?`)) return;
     try {
-      const response = await fetch(`http://localhost:5000/admin/policy/${filename}`, {
+      const response = await fetch(apiUrl(`/admin/policy/${filename}`), {
         method: 'DELETE',
         headers: { 'Authorization': 'Basic ' + btoa(`${adminAuth.user}:${adminAuth.pass}`) }
       });
@@ -100,7 +103,7 @@ function App() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:5000/admin/policy/${editingPolicy.filename}`, {
+      const response = await fetch(apiUrl(`/admin/policy/${editingPolicy.filename}`), {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
@@ -129,7 +132,7 @@ function App() {
     setChatHistory([]); // Clear chat history when new recommendation is generated
     try {
       const payload = { ...formData, conditions: formData.conditions.split(',').map(c => c.trim()) };
-      const response = await fetch('http://localhost:5000/recommend', {
+      const response = await fetch(apiUrl('/recommend'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -152,7 +155,7 @@ function App() {
     setChatLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/chat', {
+      const response = await fetch(apiUrl('/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
